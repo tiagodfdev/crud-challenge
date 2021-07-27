@@ -60,7 +60,6 @@ export default function ClientDetails() {
         const target = e.target;
         const name = target.name;
         const value = target.value;
-        console.log(value)
         switch (name){
           case 'name':
             setName(value)
