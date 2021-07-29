@@ -3,14 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import {jsUcfirst} from '../../utils/firstUpperCase'
 import { EndPoint } from '../../constants'
-
-
-interface IClient {
-    _id:number;
-    name:string;
-    cpf:string;
-    contact:{email:string,phone:string}
-}
+import {IClient}from '../../types'
 
 export default function Main() {
     const apiEndPoint = EndPoint
@@ -20,8 +13,7 @@ export default function Main() {
     const [searchResults, setSearchResults] = useState<IClient[]>([]);
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-  };
-
+    };
 
     useEffect(()=>{
         fetch(`https://crudcrud.com/api/${apiEndPoint}/clients`).then(response => {
@@ -36,7 +28,8 @@ export default function Main() {
           objData.name.toLowerCase().includes(searchTerm)
         );
         setSearchResults(results);
-      }, [searchTerm,data]);
+    }, [searchTerm,data]);
+    
     return(
         <Flex 
             flexDirection="column"
@@ -92,35 +85,35 @@ export default function Main() {
                         m="0"
                     >
                         {searchResults.map(client => (
-                                <ListItem 
-                                    display= "flex"
-                                    justifyContent="space-between"
-                                    key={client._id}
-                                    listStyleType="none"
-                                    m="0.1rem"
-                                    w="100%"
-                                    color="#434343"
-                                    backgroundColor="#e8e8e8"
-                                    borderRadius="0.3rem"
-                                    p="0 0.5rem"
-                                    fontSize="x-large"
-                                    fontFamily="Gelion Regular"
-                                    fontWeight="400"   
+                            <ListItem 
+                                display= "flex"
+                                justifyContent="space-between"
+                                key={client._id}
+                                listStyleType="none"
+                                m="0.1rem"
+                                w="100%"
+                                color="#434343"
+                                backgroundColor="#e8e8e8"
+                                borderRadius="0.3rem"
+                                p="0 0.5rem"
+                                fontSize="x-large"
+                                fontFamily="Gelion Regular"
+                                fontWeight="400"   
+                            >
+                                <Text>
+                                    {jsUcfirst(client.name)}
+                                </Text>
+                                <Link to={`/client/${client._id}`}>
+                                <Text 
+                                    fontSize="large"
+                                    fontWeight="extrabold"
+                                    textAlign="center"
+                                    letterSpacing="widest"
                                 >
-                                    <Text>
-                                        {jsUcfirst(client.name)}
-                                    </Text>
-                                    <Link to={`/client/${client._id}`}>
-                                    <Text 
-                                        fontSize="large"
-                                        fontWeight="extrabold"
-                                        textAlign="center"
-                                        letterSpacing="widest"
-                                    >
-                                        ...
-                                    </Text>
-                                    </Link>
-                                </ListItem>
+                                    ...
+                                </Text>
+                                </Link>
+                            </ListItem>
                         ))}
                     </UnorderedList>
                 </Flex>

@@ -58,8 +58,7 @@ export default function NewClient() {
       e.preventDefault()
       const bodySend = new Client(name, cpf, email, phone)
       setSubmitState(true)
-
-    handlePress(bodySend)
+      handlePress(bodySend)
     }
   return (
     <Flex flexDirection="column" w="100%" maxWidth="3xl">

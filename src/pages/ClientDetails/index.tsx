@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom'
-import {FormControl, Input, Button, Flex, InputGroup, InputLeftAddon } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { Client } from '../../Entities/Client';
 import { EndPoint } from '../../constants'
-
-
-interface IClient {
-    _id:number;
-    name:string;
-    cpf:string;
-    contact:{email:string,phone:string}
-}
+import MyFormControl from '../../components/MyFormControl';
+import {IClient}from '../../types'
 
 
 export default function ClientDetails() {
@@ -27,7 +21,6 @@ export default function ClientDetails() {
     const [phone, setPhone] = useState<string>("")
     const [submitState, setSubmitState] = useState(false)
     
-
     useEffect(()=>{
         fetch(`https://crudcrud.com/api/${apiEndPoint}/clients/${id}`).then(response => {
             response.json().then(clients => {
@@ -52,7 +45,6 @@ export default function ClientDetails() {
             setisDisableEditStatus(true)
             setButtonLabel("Editar")
         }
-
     }
 
     function handleInputChange(e:React.ChangeEvent<HTMLInputElement>) {
@@ -76,7 +68,7 @@ export default function ClientDetails() {
           default:
             console.log('error')
         }
-      }
+    }
     const handlePress = async (body:Client) => {
         const res = await fetch(`https://crudcrud.com/api/${apiEndPoint}/clients/${id}`, {
         method: 'PUT',
@@ -113,14 +105,12 @@ export default function ClientDetails() {
             alert('Serviço temporariamente fora do ar')
         }
     }
-        const onSubmit = async (e:React.FormEvent) => {
-          e.preventDefault()
-          const bodySend = new Client(name, cpf, email, phone)
-          setSubmitState(true)
-
-    
-        handlePress(bodySend)
-        }
+    const onSubmit = async (e:React.FormEvent) => {
+        e.preventDefault()
+        const bodySend = new Client(name, cpf, email, phone)
+        setSubmitState(true)
+    handlePress(bodySend)
+    }
 
     return(
         <Flex 
@@ -134,88 +124,10 @@ export default function ClientDetails() {
             maxWidth="3xl"
         >
             <form style={{width:"100%"}} id="editForm">
-                <FormControl
-                    isRequired
-                    id="name"
-                    display= "flex"
-                    listStyleType="none"
-                    m="0.2rem"
-                    w="100%"
-                    color="#434343"
-                    backgroundColor="#e8e8e8"
-                    borderRadius="0.3rem"
-                    fontSize="x-large"
-                    fontFamily="Gelion Regular"
-                    fontWeight="400"  
-                >
-                    <InputGroup>
-                        <InputLeftAddon bg="#3f75a9" children="Nome" />
-                        <Input name="name" isDisabled={isDisableEditStatus} type="text" _placeholder={{color:"black"}} placeholder={data?.name} onChange={handleInputChange} />
-                    </InputGroup>
-                </FormControl>
-
-
-                <FormControl
-                    isRequired
-                    id="cpf"
-                    display= "flex"
-                    listStyleType="none"
-                    m="0.2rem"
-                    w="100%"
-                    color="#434343"
-                    backgroundColor="#e8e8e8"
-                    borderRadius="0.3rem"
-                    fontSize="x-large"
-                    fontFamily="Gelion Regular"
-                    fontWeight="400" 
-                >
-                    <InputGroup>
-                        <InputLeftAddon bg="#3f75a9" children="CPF" />
-                        <Input name="cpf" isDisabled={isDisableEditStatus} type="text" _placeholder={{color:"black"}} placeholder={data?.cpf} onChange={handleInputChange} />
-                    </InputGroup>
-                </FormControl>
-
-
-                <FormControl
-                    isRequired
-                    id="email"
-                    display= "flex"
-                    listStyleType="none"
-                    m="0.2rem"
-                    w="100%"
-                    color="#434343"
-                    backgroundColor="#e8e8e8"
-                    borderRadius="0.3rem"
-                    fontSize="x-large"
-                    fontFamily="Gelion Regular"
-                    fontWeight="400" 
-                >
-                    <InputGroup>
-                        <InputLeftAddon bg="#3f75a9" children="E-mail" />
-                        <Input name="email" isDisabled={isDisableEditStatus} type="email" _placeholder={{color:"black"}} placeholder={data?.contact.email} onChange={handleInputChange} />
-                    </InputGroup>
-                </FormControl>
-
-
-                <FormControl
-                    isRequired
-                    id="phone"
-                    display= "flex"
-                    listStyleType="none"
-                    m="0.2rem"
-                    w="100%"
-                    color="#434343"
-                    backgroundColor="#e8e8e8"
-                    borderRadius="0.3rem"
-                    fontSize="x-large"
-                    fontFamily="Gelion Regular"
-                    fontWeight="400" 
-                >
-                    <InputGroup>
-                        <InputLeftAddon bg="#3f75a9" children="Telefone" />
-                        <Input name="phone" isDisabled={isDisableEditStatus} type="text" _placeholder={{color:"black"}} placeholder={data?.contact.phone} onChange={handleInputChange} />
-                    </InputGroup>
-                </FormControl>
+                <MyFormControl id="name" label="Nome" type="text" placeholder={data?.name} isDisableEditStatus={isDisableEditStatus} handleInputChange={handleInputChange}/>
+                <MyFormControl id="cpf" label="CPF" type="text" placeholder={data?.cpf} isDisableEditStatus={isDisableEditStatus} handleInputChange={handleInputChange}/>
+                <MyFormControl id="email" label="E-mail" type="email" placeholder={data?.contact.email} isDisableEditStatus={isDisableEditStatus} handleInputChange={handleInputChange}/>
+                <MyFormControl id="phone" label="Telefone" type="text" placeholder={data?.contact.phone} isDisableEditStatus={isDisableEditStatus} handleInputChange={handleInputChange}/>
             </form>
             <Flex 
                 flexDirection="row"
