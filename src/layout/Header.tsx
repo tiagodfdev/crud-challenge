@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 
 
 const Header = (): JSX.Element => {
@@ -18,7 +18,10 @@ const Header = (): JSX.Element => {
          >
              <Flex>
                 <a href="/">
-                    <img src="https://static.nagem.com.br/util/artefatos/asset/n/9821596550697/img/layout/logoNagem.png" alt="Nagem"/>
+                    <Heading
+                        color="white"
+                        fontSize="6xl"
+                    >MyLogo</Heading>
                 </a>
              </Flex>
         </Flex>
