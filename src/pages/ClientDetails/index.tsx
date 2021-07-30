@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react';
@@ -6,14 +8,12 @@ import { Button, Flex } from '@chakra-ui/react';
 import Client from '../../Entities/Client';
 import { EndPoint } from '../../constants';
 import MyFormControl from '../../components/MyFormControl';
-import { IClient } from '../../types';
 
 export default function ClientDetails() {
-  const apiEndPoint = EndPoint;
   const history = useHistory();
 
-  const { id }:any = useParams();
-  const [data, setData] = useState<IClient>();
+  const { id } = useParams<{id:string}>();
+  const [data, setData] = useState<Client>();
   const [isDisableEditStatus, setisDisableEditStatus] = useState(true);
   const [buttonLabel, setButtonLabel] = useState('Editar');
   const [name, setName] = useState<string>('');
@@ -23,39 +23,25 @@ export default function ClientDetails() {
   const [submitState, setSubmitState] = useState(false);
 
   useEffect(() => {
-    fetch(`https://crudcrud.com/api/${apiEndPoint}/clients/${id}`).then((response) => {
+    fetch(`https://crudcrud.com/api/${EndPoint}/clients/${id}`).then((response) => {
       response.json().then((clients) => {
-        setData(clients);
+        const client = new Client(clients!.name,
+            clients!.cpf,
+            clients!.contact.email,
+            clients!.contact.phone,
+            EndPoint,
+            clients?._id);
+        setData(client);
       });
     });
-  }, [id, apiEndPoint]);
-
-  const handlePress = async (body:Client) => {
-    const res = await fetch(`https://crudcrud.com/api/${apiEndPoint}/clients/${id}`, {
-      method: 'PUT',
-      headers: {
-        Host: 'crudcrud.com',
-        'Content-Type': 'application/json',
-        Accept: '*/*',
-      },
-      body: JSON.stringify(body),
-    });
-    if (res.status >= 200 && res.status < 299) {
-      setSubmitState(false);
-      alert('Modificado com sucesso');
-      history.push('/');
-    }
-    if (res.status >= 300 || false) {
-      setSubmitState(false);
-      alert('Serviço temporariamente fora do ar');
-    }
-  };
+  }, [id, EndPoint]);
 
   const onSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
-    const bodySend = new Client(name, cpf, email, phone);
+    const bodySend = new Client(name, cpf, email, phone, EndPoint, id);
     setSubmitState(true);
-    handlePress(bodySend);
+    await bodySend.updClient(setSubmitState);
+    history.push('/');
   };
 
   function editAndSubmitClick(e:React.FormEvent) {
@@ -101,21 +87,8 @@ export default function ClientDetails() {
   }
 
   const deleteClick = async () => {
-    const res = await fetch(`https://crudcrud.com/api/${apiEndPoint}/clients/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Host: 'crudcrud.com',
-        'Content-Type': 'application/json',
-        Accept: '*/*',
-      },
-    });
-    if (res.status >= 200 && res.status < 299) {
-      alert('Deletado com sucesso');
-      history.push('/');
-    }
-    if (res.status >= 300 || false) {
-      alert('Serviço temporariamente fora do ar');
-    }
+    await data!.rmClient();
+    history.push('/');
   };
 
   return (

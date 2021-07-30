@@ -9,8 +9,6 @@ import { EndPoint } from '../../constants';
 import { IClient } from '../../types';
 
 export default function Main() {
-  const apiEndPoint = EndPoint;
-
   const [data, setData] = useState<IClient[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<IClient[]>([]);
@@ -19,12 +17,12 @@ export default function Main() {
   };
 
   useEffect(() => {
-    fetch(`https://crudcrud.com/api/${apiEndPoint}/clients`).then((response) => {
+    fetch(`https://crudcrud.com/api/${EndPoint}/clients`).then((response) => {
       response.json().then((clients) => {
         setData(clients);
       });
     });
-  }, [apiEndPoint]);
+  }, [EndPoint]);
 
   useEffect(() => {
     const results = data.filter((objData) => objData.name.toLowerCase().includes(searchTerm));

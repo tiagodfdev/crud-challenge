@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-children-prop */
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
@@ -12,7 +13,6 @@ import { EndPoint } from '../../constants';
 import MyFormControl from '../../components/MyFormControl';
 
 export default function NewClient() {
-  const apiEndPoint = EndPoint;
   const history = useHistory();
 
   const [name, setName] = useState('');
@@ -42,31 +42,13 @@ export default function NewClient() {
         console.log('error');
     }
   }
-  const handlePress = async (body:Client) => {
-    const res = await fetch(`https://crudcrud.com/api/${apiEndPoint}/clients`, {
-      method: 'POST',
-      headers: {
-        Host: 'crudcrud.com',
-        'Content-Type': 'application/json',
-        Accept: '*/*',
-      },
-      body: JSON.stringify(body),
-    });
-    if (res.status >= 200 && res.status < 299) {
-      setSubmitState(false);
-      alert('Cliente criado com sucesso!');
-      history.push('/');
-    }
-    if (res.status >= 300 || false) {
-      setSubmitState(false);
-      alert('Serviço de e-mail temporariamente fora do ar');
-    }
-  };
+
   const onSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
-    const bodySend = new Client(name, cpf, email, phone);
+    const bodySend = new Client(name, cpf, email, phone, EndPoint);
     setSubmitState(true);
-    handlePress(bodySend);
+    await bodySend.addClient(setSubmitState);
+    history.push('/');
   };
   return (
     <Flex flexDirection="column" w="100%" maxWidth="3xl">

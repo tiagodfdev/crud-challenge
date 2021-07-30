@@ -1,10 +1,10 @@
 import React from 'react';
 
 export interface IClient {
-    _id:number;
     name:string;
     cpf:string;
     contact:{email:string, phone:string}
+    _id?:string;
 }
 export interface IForm {
     id:string;
