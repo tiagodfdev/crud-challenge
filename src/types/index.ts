@@ -12,5 +12,5 @@ export interface IForm {
     type:string;
     placeholder:string|undefined;
     isDisableEditStatus?:boolean;
-    handleInputChange:React.ChangeEventHandler<HTMLInputElement>;
+    setStateTarget:React.Dispatch<React.SetStateAction<string>>;
 }

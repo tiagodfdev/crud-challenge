@@ -7,7 +7,7 @@ import { IForm } from '../types';
 
 const MyFormControl = (props:IForm) => {
   const {
-    id, label, type, handleInputChange, placeholder, isDisableEditStatus,
+    id, label, type, setStateTarget, placeholder, isDisableEditStatus,
   } = props;
   return (
     <FormControl
@@ -26,7 +26,7 @@ const MyFormControl = (props:IForm) => {
     >
       <InputGroup>
         <InputLeftAddon bg="#3f75a9" children={label} />
-        <Input name={id} isDisabled={isDisableEditStatus} type={type} _placeholder={{ color: 'black' }} placeholder={placeholder} onChange={handleInputChange} />
+        <Input name={id} isDisabled={isDisableEditStatus} type={type} _placeholder={{ color: 'black' }} placeholder={placeholder} onChange={(e) => { setStateTarget(e.target.value); }} />
       </InputGroup>
     </FormControl>
   );

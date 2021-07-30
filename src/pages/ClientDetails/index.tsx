@@ -62,30 +62,6 @@ export default function ClientDetails() {
     }
   }
 
-  function handleInputChange(e:React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    const { target } = e;
-    // eslint-disable-next-line no-shadow
-    const { name } = target;
-    const { value } = target;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'cpf':
-        setCpf(value);
-        break;
-      case 'email':
-        setEmail(value);
-        break;
-      case 'phone':
-        setPhone(value);
-        break;
-      default:
-        console.log('error');
-    }
-  }
-
   const deleteClick = async () => {
     await data!.rmClient();
     history.push('/');
@@ -103,10 +79,10 @@ export default function ClientDetails() {
       maxWidth="3xl"
     >
       <form style={{ width: '100%' }} id="editForm">
-        <MyFormControl id="name" label="Nome" type="text" placeholder={data?.name} isDisableEditStatus={isDisableEditStatus} handleInputChange={handleInputChange} />
-        <MyFormControl id="cpf" label="CPF" type="text" placeholder={data?.cpf} isDisableEditStatus={isDisableEditStatus} handleInputChange={handleInputChange} />
-        <MyFormControl id="email" label="E-mail" type="email" placeholder={data?.contact.email} isDisableEditStatus={isDisableEditStatus} handleInputChange={handleInputChange} />
-        <MyFormControl id="phone" label="Telefone" type="text" placeholder={data?.contact.phone} isDisableEditStatus={isDisableEditStatus} handleInputChange={handleInputChange} />
+        <MyFormControl id="name" label="Nome" type="text" placeholder={data?.name} isDisableEditStatus={isDisableEditStatus} setStateTarget={setName} />
+        <MyFormControl id="cpf" label="CPF" type="text" placeholder={data?.cpf} isDisableEditStatus={isDisableEditStatus} setStateTarget={setCpf} />
+        <MyFormControl id="email" label="E-mail" type="email" placeholder={data?.contact.email} isDisableEditStatus={isDisableEditStatus} setStateTarget={setEmail} />
+        <MyFormControl id="phone" label="Telefone" type="text" placeholder={data?.contact.phone} isDisableEditStatus={isDisableEditStatus} setStateTarget={setPhone} />
       </form>
       <Flex
         flexDirection="row"

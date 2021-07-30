@@ -21,28 +21,6 @@ export default function NewClient() {
   const [phone, setPhone] = useState('');
   const [submitState, setSubmitState] = useState(false);
 
-  function handleInputChange(e:React.ChangeEvent<HTMLInputElement>) {
-    const { target } = e;
-    const { name } = target;
-    const { value } = target;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'cpf':
-        setCpf(value);
-        break;
-      case 'email':
-        setEmail(value);
-        break;
-      case 'phone':
-        setPhone(value);
-        break;
-      default:
-        console.log('error');
-    }
-  }
-
   const onSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
     const bodySend = new Client(name, cpf, email, phone, EndPoint);
@@ -53,10 +31,10 @@ export default function NewClient() {
   return (
     <Flex flexDirection="column" w="100%" maxWidth="3xl">
       <form onSubmit={onSubmit}>
-        <MyFormControl id="name" label="Nome" type="text" placeholder="NOME*" handleInputChange={handleInputChange} />
-        <MyFormControl id="cpf" label="CPF" type="text" placeholder="CPF*" handleInputChange={handleInputChange} />
-        <MyFormControl id="email" label="E-mail" type="email" placeholder="E-MAIL*" handleInputChange={handleInputChange} />
-        <MyFormControl id="phone" label="Telefone" type="text" placeholder="TELEFONE*" handleInputChange={handleInputChange} />
+        <MyFormControl id="name" label="Nome" type="text" placeholder="NOME*" setStateTarget={setName} />
+        <MyFormControl id="cpf" label="CPF" type="text" placeholder="CPF*" setStateTarget={setCpf} />
+        <MyFormControl id="email" label="E-mail" type="email" placeholder="E-MAIL*" setStateTarget={setEmail} />
+        <MyFormControl id="phone" label="Telefone" type="text" placeholder="TELEFONE*" setStateTarget={setPhone} />
 
         <Button
           bg="button.bg"
