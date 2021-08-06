@@ -1,8 +1,3 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react/no-children-prop */
-/* eslint-disable no-alert */
-/* eslint-disable no-console */
-/* eslint-disable no-shadow */
 import {
   Flex, Button,
 } from '@chakra-ui/react';

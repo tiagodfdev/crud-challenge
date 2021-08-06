@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-expressions */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable no-console */
-/* eslint-disable no-alert */
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Button, Flex } from '@chakra-ui/react';
